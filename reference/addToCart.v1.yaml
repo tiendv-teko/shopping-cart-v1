@@ -1,4 +1,3 @@
-
 openapi: 3.0.0
 info:
   title: Cart Service
@@ -8,20 +7,25 @@ info:
 tags: []
 servers: []
 paths:
-  /api/v1/cart/apply-coupon:
+  /api/v1/cart/add-to-cart:
     post:
-      operationId: CartController_applyCoupon
-      summary: Apply coupon
+      operationId: CartController_addToCart
+      summary: Add a product to cart
       parameters: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/CheckCouponDto'
+              $ref: 'schema.v1.yaml#/components/schemas/AddToCartDto'
       responses:
         '200':
-          description: Apply coupon status
+          description: Added order line
+          content:
+            application/json:
+              schema:
+                $ref: 'schema.v1.yaml#/components/schemas/OrderLineItem'
+              examples: {}
         '406':
           description: Not Acceptable
           content:
@@ -29,20 +33,26 @@ paths:
               schema:
                 $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/Error'
               examples:
-                Mã khuyến mại không hợp lệ hoặc không được áp dụng với những sản phẩm trong giỏ:
+                Khuyến mại lựa chọn không tồn tại:
                   value:
                     code: 406
-                    message: Mã khuyến mại không hợp lệ hoặc không được áp dụng với những sản phẩm trong giỏ
+                    message: Khuyến mại lựa chọn không tồn tại
                     details:
-                      - '@type': rpc.tekoapis.com/cart.v1.OrderLineNotFound
-                        message: Mã khuyến mại không hợp lệ hoặc không được áp dụng với những sản phẩm trong giỏ
-                Mã khuyến mại không được áp dụng cho các nhà bán hàng hiện tại:
+                      - '@type': rpc.tekoapis.com/cart.v1.PromotionNotExist
+                        message: Khuyến mại lựa chọn không tồn tại
+        '412':
+          description: AddToCart Error Response
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/Error'
+              examples:
+                Sản phẩm không tồn tại hoặc đã ngưng bán:
                   value:
-                    code: 406
-                    message: rpc.tekoapis.com/cart.v1.CouponInvalid
+                    code: 412
+                    message: Sản phẩm không tồn tại hoặc đã ngưng bán
                     details:
-                      - '@type': string
-                        message: Mã khuyến mại không được áp dụng cho các nhà bán hàng hiện tại
+                      - '@type': rpc.tekoapis.com/cart.v1.ProductNotFound
+                        message: Sản phẩm không tồn tại hoặc đã ngưng bán
       tags:
         - Cart management
-
