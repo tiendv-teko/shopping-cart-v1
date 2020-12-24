@@ -570,6 +570,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/OrderLineItem'
               examples: {}
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        '@type':
+                          type: string
+                        message:
+                          type: string
+              examples:
+                Sản phẩm không tồn tại hoặc đã ngưng bán:
+                  value:
+                    code: 406
+                    message: Khuyến mại lựa chọn không tồn tại
+                    details:
+                      - '@type': rpc.tekoapis.com/cart.v1.PromotionNotExist
+                        message: Khuyến mại lựa chọn không tồn tại
         '412':
           description: AddToCart Error Response
           content:

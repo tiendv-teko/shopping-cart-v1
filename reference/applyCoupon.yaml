@@ -1,4 +1,3 @@
-
 openapi: 3.0.0
 info:
   title: Cart Service
@@ -552,25 +551,20 @@ components:
         - state
         - childOrders
 paths:
-  /api/v1/cart/add-to-cart:
+  /api/v1/cart/apply-coupon:
     post:
-      operationId: CartController_addToCart
-      summary: Add a product to cart
+      operationId: CartController_applyCoupon
+      summary: Apply coupon
       parameters: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddToCartDto'
+              $ref: '#/components/schemas/CheckCouponDto'
       responses:
         '200':
-          description: Added order line
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OrderLineItem'
-              examples: {}
+          description: Apply coupon status
         '406':
           description: Not Acceptable
           content:
@@ -592,41 +586,19 @@ paths:
                         message:
                           type: string
               examples:
-                Sản phẩm không tồn tại hoặc đã ngưng bán:
+                Mã khuyến mại không hợp lệ hoặc không được áp dụng với những sản phẩm trong giỏ:
                   value:
                     code: 406
-                    message: Khuyến mại lựa chọn không tồn tại
+                    message: Mã khuyến mại không hợp lệ hoặc không được áp dụng với những sản phẩm trong giỏ
                     details:
-                      - '@type': rpc.tekoapis.com/cart.v1.PromotionNotExist
-                        message: Khuyến mại lựa chọn không tồn tại
-        '412':
-          description: AddToCart Error Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: number
-                  message:
-                    type: string
-                  details:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        '@type':
-                          type: string
-                        message:
-                          type: string
-              examples:
-                Sản phẩm không tồn tại hoặc đã ngưng bán:
+                      - '@type': rpc.tekoapis.com/cart.v1.OrderLineNotFound
+                        message: Mã khuyến mại không hợp lệ hoặc không được áp dụng với những sản phẩm trong giỏ
+                Mã khuyến mại không được áp dụng cho các nhà bán hàng hiện tại:
                   value:
-                    code: 412
-                    message: Sản phẩm không tồn tại hoặc đã ngưng bán
+                    code: 406
+                    message: rpc.tekoapis.com/cart.v1.CouponInvalid
                     details:
-                      - '@type': rpc.tekoapis.com/cart.v1.ProductNotFound
-                        message: Sản phẩm không tồn tại hoặc đã ngưng bán
+                      - '@type': string
+                        message: Mã khuyến mại không được áp dụng cho các nhà bán hàng hiện tại
       tags:
         - Cart management
-
