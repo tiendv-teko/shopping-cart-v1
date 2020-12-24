@@ -7,9 +7,9 @@ info:
 tags: []
 servers: []
 paths:
-  /api/v1/cart/payment-methods-v2:
+  /api/v1/cart/payment-methods:
     get:
-      operationId: CartController_getPaymentMethods2
+      operationId: CartController_getPaymentMethods
       summary: Get available payment methods
       parameters:
         - name: orderCode
@@ -29,19 +29,5 @@ paths:
             application/json:
               schema:
                 $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/PaymentMethodsResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/Error'
-              examples:
-                Không định danh được user:
-                  value:
-                    code: 404
-                    message: Không định danh được user
-                    details:
-                      - '@type': rpc.tekoapis.com/cart.v1.OrderLineNotFound
-                        message: Không định danh được user
       tags:
         - Cart management

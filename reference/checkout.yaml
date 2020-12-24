@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: Cart Service
+  description: Cart Service API Description
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+paths:
+  /api/v1/cart/checkout:
+    post:
+      operationId: CartController_checkout
+      summary: Checkout
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/CheckoutDto'
+      responses:
+        '200':
+          description: Order response
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/Order'
+      tags:
+        - Cart management

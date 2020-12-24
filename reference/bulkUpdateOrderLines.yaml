@@ -1,0 +1,37 @@
+
+
+
+openapi: 3.0.0
+info:
+  title: Cart Service
+  description: Cart Service API Description
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+paths:
+  /api/v1/cart/order-items:
+    put:
+      operationId: CartController_bulkUpdateOrderLines
+      summary: Update all order items related to a seller. We will use this API for the use case when user want to select/unselect all order items belong to a seller
+      parameters:
+        - name: sellerId
+          required: false
+          in: query
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/UpdateOrderLineDto'
+      responses:
+        '200':
+          description: Updated order lines
+        '404':
+          description: Order line ID not found
+      tags:
+        - Cart management
+
+

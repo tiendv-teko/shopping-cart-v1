@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: Cart Service
+  description: Cart Service API Description
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+paths:
+  /api/v1/cart/shipping-address:
+    post:
+      operationId: CartController_setShippingAddress
+      summary: Set shipping address
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/ShippingAddress'
+      responses:
+        '200':
+          description: Shipping address
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/ShippingAddress'
+      tags:
+        - Cart management
