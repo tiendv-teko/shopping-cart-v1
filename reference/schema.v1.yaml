@@ -551,3 +551,19 @@ components:
         - code
         - state
         - childOrders
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              '@type':
+                type: string
+              message:
+                type: string
