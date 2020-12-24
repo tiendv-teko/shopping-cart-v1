@@ -20,12 +20,13 @@ components:
       properties:
         sku:
           type: string
-          description: Product SKU
+          description: 'Product SKU, created from Catalog'
         quantity:
           type: number
           default: 1
         selectPromotionId:
           type: number
+          description: The promotion that user expects to receive by buying this product
       required:
         - sku
     ProductPrice:
@@ -550,6 +551,7 @@ components:
         - code
         - state
         - childOrders
+  responses: {}
 paths:
   /api/v1/cart/add-to-cart:
     post:
@@ -591,7 +593,7 @@ paths:
                         message:
                           type: string
               examples:
-                Sản phẩm không tồn tại hoặc đã ngưng bán:
+                Khuyến mại lựa chọn không tồn tại:
                   value:
                     code: 406
                     message: Khuyến mại lựa chọn không tồn tại
