@@ -571,3 +571,10 @@ components:
                 type: string
               message:
                 type: string
+    ErrorV1:
+      type: object
+      properties:
+        statusCode:
+          type: number
+        message:
+          type: string
