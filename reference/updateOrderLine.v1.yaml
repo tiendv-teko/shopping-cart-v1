@@ -7,27 +7,31 @@ info:
 tags: []
 servers: []
 paths:
-  /api/v1/cart/add-to-cart:
-    post:
-      operationId: CartController_addToCart
-      summary: Add a product to cart
-      parameters: []
+  '/api/v1/cart/order-lines/{orderLineId}':
+    put:
+      operationId: CartController_updateOrderLine
+      summary: Update order line quantity
+      parameters:
+        - name: orderLineId
+          required: true
+          in: path
+          schema:
+            type: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/AddToCartDto'
+              $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/UpdateOrderLineDto'
       responses:
         '200':
-          description: Added order line
+          description: Updated order line
           content:
             application/json:
               schema:
                 $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/OrderLineItem'
-              examples: {}
-        '406':
-          description: Not Acceptable
+        '412':
+          description: Example response
           content:
             application/json:
               schema:
@@ -47,26 +51,19 @@ paths:
                         message:
                           type: string
               examples:
-                Sản phẩm không tồn tại hoặc đã ngưng bán:
-                  value:
-                    code: 406
-                    message: Khuyến mại lựa chọn không tồn tại
-                    details:
-                      - '@type': rpc.tekoapis.com/cart.v1.PromotionNotExist
-                        message: Khuyến mại lựa chọn không tồn tại
-        '412':
-          description: AddToCart Error Response
-          content:
-            application/json:
-              schema:
-                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/Error'
-              examples:
-                Sản phẩm không tồn tại hoặc đã ngưng bán:
+                Không đủ số lượng sản phẩm:
                   value:
                     code: 412
-                    message: Sản phẩm không tồn tại hoặc đã ngưng bán
+                    message: Không đủ số lượng sản phẩm
                     details:
-                      - '@type': rpc.tekoapis.com/cart.v1.ProductNotFound
-                        message: Sản phẩm không tồn tại hoặc đã ngưng bán
+                      - '@type': rpc.tekoapis.com/cart.v1.ProductQuantityNotEnough
+                        message: Không đủ số lượng sản phẩm
+                OrderLine Id không tồn tại:
+                  value:
+                    code: 404
+                    message: OrderLine Id không tồn tại
+                    details:
+                      - '@type': rpc.tekoapis.com/cart.v1.OrderLineNotFound
+                        message: OrderLine Id không tồn tại
       tags:
         - Cart management
