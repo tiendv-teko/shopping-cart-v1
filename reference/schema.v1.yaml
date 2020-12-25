@@ -25,12 +25,12 @@ components:
         quantity:
           type: number
           default: 1
-          maximum: 32
-          exclusiveMaximum: true
+          exclusiveMaximum: false
           minimum: 1
         selectPromotionId:
           type: number
           description: The promotion that user expects to receive by buying this product
+          default: 'null'
       required:
         - sku
     ProductPrice:

@@ -17,29 +17,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/26ae7e8a6fd4122f5db166d3cad5d6e28069c834/reference/schema.v1.yaml#/components/schemas/AddToCartDto'
+              $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/AddToCartDto'
       responses:
         '200':
           description: Added order line
           content:
             application/json:
               schema:
-                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/26ae7e8a6fd4122f5db166d3cad5d6e28069c834/reference/schema.v1.yaml#/components/schemas/OrderLineItem'
+                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/OrderLineItem'
               examples: {}
-        '406':
-          description: Not Acceptable
-          content:
-            application/json:
-              schema:
-                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/Error'
-              examples:
-                Khuyến mại lựa chọn không tồn tại:
-                  value:
-                    code: 406
-                    message: Khuyến mại lựa chọn không tồn tại
-                    details:
-                      - '@type': rpc.tekoapis.com/cart.v1.PromotionNotExist
-                        message: Khuyến mại lựa chọn không tồn tại
         '412':
           description: AddToCart Error Response
           content:
@@ -52,7 +38,21 @@ paths:
                     code: 412
                     message: Sản phẩm không tồn tại hoặc đã ngưng bán
                     details:
-                      - '@type': rpc.tekoapis.com/cart.v1.ProductNotFound
+                      - '@type': rpc.tekoapis.com/cart.v1.ProductNotAvailable
                         message: Sản phẩm không tồn tại hoặc đã ngưng bán
+                Khuyến mại lựa chọn không hợp lệ:
+                  value:
+                    code: 412
+                    message: Khuyến mại lựa chọn không hợp lệ
+                    details:
+                      - '@type': rpc.tekoapis.com/cart.v1.PromotionInvalid
+                        message: Khuyến mại lựa chọn không hợp lệ
+                Sản phẩm không đủ tồn kho:
+                  value:
+                    code: 412
+                    message: Sản phẩm không đủ tồn kho
+                    details:
+                      - '@type': rpc.tekoapis.com/cart.v1.PromotionInvalid
+                        message: Sản phẩm không đủ tồn kho
       tags:
         - Cart management
