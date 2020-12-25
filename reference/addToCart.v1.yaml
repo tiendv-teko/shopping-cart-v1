@@ -11,7 +11,19 @@ paths:
     post:
       operationId: CartController_addToCart
       summary: Add a product to cart
-      parameters: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: terminal
+          description: Terminal code (from Seller Center)
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: channel
+          description: Channel code (from Seller Center)
+          required: true
       requestBody:
         required: true
         content:
@@ -26,33 +38,24 @@ paths:
               schema:
                 $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/OrderLineItem'
               examples: {}
-        '412':
+        '400':
           description: AddToCart Error Response
           content:
             application/json:
               schema:
-                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/Error'
+                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/main/reference/schema.v1.yaml#/components/schemas/ErrorV1'
               examples:
                 Sản phẩm không tồn tại hoặc đã ngưng bán:
                   value:
-                    code: 412
+                    statusCode: 400
                     message: Sản phẩm không tồn tại hoặc đã ngưng bán
-                    details:
-                      - '@type': rpc.tekoapis.com/cart.v1.ProductNotAvailable
-                        message: Sản phẩm không tồn tại hoặc đã ngưng bán
                 Khuyến mại lựa chọn không hợp lệ:
                   value:
-                    code: 412
+                    statusCode: 400
                     message: Khuyến mại lựa chọn không hợp lệ
-                    details:
-                      - '@type': rpc.tekoapis.com/cart.v1.PromotionInvalid
-                        message: Khuyến mại lựa chọn không hợp lệ
                 Sản phẩm không đủ tồn kho:
                   value:
-                    code: 412
+                    statusCode: 400
                     message: Sản phẩm không đủ tồn kho
-                    details:
-                      - '@type': rpc.tekoapis.com/cart.v1.PromotionInvalid
-                        message: Sản phẩm không đủ tồn kho
       tags:
         - Cart management
