@@ -21,9 +21,13 @@ components:
         sku:
           type: string
           description: 'Product SKU, created from Catalog'
+          example: '1800160'
         quantity:
           type: number
           default: 1
+          maximum: 32
+          exclusiveMaximum: true
+          minimum: 1
         selectPromotionId:
           type: number
           description: The promotion that user expects to receive by buying this product

@@ -17,14 +17,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'schema.v1.yaml#/components/schemas/AddToCartDto'
+              $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/26ae7e8a6fd4122f5db166d3cad5d6e28069c834/reference/schema.v1.yaml#/components/schemas/AddToCartDto'
       responses:
         '200':
           description: Added order line
           content:
             application/json:
               schema:
-                $ref: 'schema.v1.yaml#/components/schemas/OrderLineItem'
+                $ref: 'https://raw.githubusercontent.com/tiendv-teko/shopping-cart-v1/26ae7e8a6fd4122f5db166d3cad5d6e28069c834/reference/schema.v1.yaml#/components/schemas/OrderLineItem'
               examples: {}
         '406':
           description: Not Acceptable
